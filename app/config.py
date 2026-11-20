@@ -9,4 +9,4 @@ RULE_VERSION = "2026.11.18-v1"
 SAMPLES = Path(__file__).resolve().parent.parent / "sample_data"
 MAX_BYTES = 4 * 1024 * 1024
 
-COLUMNS.update({'key':'业务键','detail':'依据','meter_kwh':'总表 kWh','order_kwh':'订单 kWh','loss_state':'损耗判定','raw_amount':'未舍入金额'})
+COLUMNS.update({'key':'业务键','detail':'依据','meter_kwh':'总表 kWh','order_kwh':'订单 kWh','loss_state':'损耗判定','raw_amount':'未舍入金额','expected':'逐单应收 CNY','gap':'取整差 CNY','disposition':'结算处置','basis':'办结/挂起依据','receivable':'站内应收 CNY','received':'渠道实收 CNY','expected_total':'逐单应收合计 CNY','rounding_gap':'取整差合计 CNY','under_amount':'实际少扣 CNY','over_amount':'实际多收 CNY','pending':'待核查单','closed':'办结单','aligned':'已对平单','blocked':'损耗异常单','orders':'订单数','station_state':'结算状态','pending_orders':'待核查单','rounding_orders':'取整差单','tail_confirmed':'已确认尾差','pending_stations':'挂起站'})

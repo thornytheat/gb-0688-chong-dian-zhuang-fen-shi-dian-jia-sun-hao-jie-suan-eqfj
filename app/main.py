@@ -53,6 +53,14 @@ def create_app():
             writer.writerow([result["manifest"]["run_id"],row.get("_line",""),row.get("id",row.get("event_id","")),"PASS",json.dumps(serial(row),ensure_ascii=False)])
         for row in result["quarantine"]:
             writer.writerow([result["manifest"]["run_id"],row["line"],row["key"],row["code"],json.dumps(row,ensure_ascii=False)])
+        for row in result.get("bills",[]):
+            if row.get("disposition") not in ("办结","待核查"):continue
+            writer.writerow([result["manifest"]["run_id"],row.get("_line",""),row.get("order",""),
+                             "TAIL" if row["disposition"]=="办结" else "REVIEW",
+                             json.dumps({"station":row.get("station"),"expected":str(row.get("expected")),
+                                         "amount":str(row.get("amount")),"bill":str(row.get("bill")),
+                                         "gap":str(row.get("gap")),"disposition":row["disposition"],
+                                         "basis":row.get("basis")},ensure_ascii=False)])
         return Response("\ufeff"+stream.getvalue(),content_type="text/csv; charset=utf-8",headers={"Content-Disposition":"attachment; filename=evidence.csv"})
     for n,name in enumerate(STAGES,1): app.register_blueprint(import_module(f"app.modules.m{n}_{name}.handler").bp)
     return app
